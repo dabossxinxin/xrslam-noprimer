@@ -1,0 +1,4 @@
+
+FIND_PATH(JSON_INCLUDE_DIRS NAMES json.h HINTS ${CMAKE_SOURCE_DIR}/../../SDK/json/include)
+FIND_FILE(JSON_DEBUG_LIB jsoncpp.lib HINTS ${CMAKE_SOURCE_DIR}/../../SDK/json/lib)
+FIND_FILE(JSON_RELEASE_LIB jsoncpp.lib HINTS ${CMAKE_SOURCE_DIR}/../../SDK/json/lib)
