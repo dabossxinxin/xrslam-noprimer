@@ -37,6 +37,7 @@
 #include <vector>
 #include <xrslam/xrslam.h>
 #include <xrslam/utility/debug.h>
+#include <glog/logging.h>
 
 #define XRSLAM_GRAVITY_NOMINAL 9.80665
 

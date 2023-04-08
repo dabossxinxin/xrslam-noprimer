@@ -52,8 +52,8 @@ class CeresReprojectionErrorFactor
         if (jacobians) {
             matrix<2, 3> dr_dy_tgt =
                 sqrt_inv_cov * dproj_dp(u_tgt) * local_tangent.transpose();
-            matrix<2, 3> dr_dy_tgt_center =
-                dr_dy_tgt * camera_tgt.q_cs.conjugate().matrix();
+			matrix<2, 3> dr_dy_tgt_center =
+				dr_dy_tgt * camera_tgt.q_cs.conjugate().matrix();
             matrix<2, 3> dr_dx =
                 dr_dy_tgt_center * q_tgt_center.conjugate().matrix();
             matrix<2, 3> dr_dy_ref_center = dr_dx * q_ref_center.matrix();

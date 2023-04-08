@@ -27,9 +27,9 @@ class CostFunctionValidator {
 
     CostFunctionValidator(const Options &options) : options(options) {
         if (!std::numeric_limits<double>::has_quiet_NaN) {
-            log_message(XRSLAM_LOG_NOTICE,
-                        "Implementation does not support quiet NaN. Detection "
-                        "of uninitialized values will be unavailable.");
+			log_message(XRSLAM_LOG_NOTICE,
+				"Implementation does not support quiet NaN. Detection "
+				"of uninitialized values will be unavailable.");
         }
     }
 

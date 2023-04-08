@@ -33,8 +33,8 @@ namespace xrslam {
 				time = avg_time;
 			}
 		});
-
-		std::cout << "frames size: " << frames.size() << std::endl;
+		
+		LOG(INFO) << "feature_track_frames_size: " << frames.size();
 
 		std::unique_ptr<Frame> frame = std::move(frames.front());
 		frames.pop_front();
@@ -73,7 +73,7 @@ namespace xrslam {
 					else {
 						// TODO: unfortunately the frame has slided out, which means
 						// we are lost...
-						log_warning("SWT cannot catch up.");
+						LOG(WARNING) << "slide_window_track cannot catch up.";
 						std::unique_lock lk(latest_pose_mutex);
 						latest_state.reset();
 					}
@@ -174,8 +174,8 @@ namespace xrslam {
 			detail->frontend->issue_frame(map->get_frame(map->frame_num() - 1));
 
 		clock_t feature_track_end = clock();
-		std::cout << "feature track time: " <<
-			double(feature_track_end - feature_track_start) / CLOCKS_PER_SEC << "s" << std::endl;
+		LOG(INFO) << "feature track time: "
+			<< double(feature_track_end - feature_track_start) / CLOCKS_PER_SEC << "s";
 	}
 
 	void FeatureTracker::track_frame(std::unique_ptr<Frame> frame) {

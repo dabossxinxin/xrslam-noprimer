@@ -30,8 +30,7 @@ Solver::Solver() : details(std::make_unique<SolverDetails>()) {
     ceres::Problem::Options problem_options;
     problem_options.cost_function_ownership = ceres::DO_NOT_TAKE_OWNERSHIP;
     problem_options.loss_function_ownership = ceres::DO_NOT_TAKE_OWNERSHIP;
-    problem_options.local_parameterization_ownership =
-        ceres::DO_NOT_TAKE_OWNERSHIP;
+    problem_options.local_parameterization_ownership = ceres::DO_NOT_TAKE_OWNERSHIP;
     details->problem = std::make_unique<ceres::Problem>(problem_options);
     details->cauchy_loss = std::make_unique<ceres::CauchyLoss>(
         1.0); // TODO(jinyu): make configurable
@@ -178,14 +177,14 @@ bool Solver::solve(bool verbose) {
     ceres::Solver::Summary solver_summary;
     solver_options.linear_solver_type = ceres::SPARSE_SCHUR;
     solver_options.trust_region_strategy_type = ceres::DOGLEG;
-    solver_options.max_num_iterations =
-        (int)details->config()->solver_iteration_limit();
-    solver_options.max_solver_time_in_seconds =
-        details->config()->solver_time_limit();
+	solver_options.max_num_iterations =
+		(int)details->config()->solver_iteration_limit();
+	solver_options.max_solver_time_in_seconds =
+		details->config()->solver_time_limit();
     solver_options.num_threads = 1;
-    solver_options.minimizer_progress_to_stdout = verbose;
+	solver_options.minimizer_progress_to_stdout = verbose;
     solver_options.update_state_every_iteration = true;
-    ceres::Solve(solver_options, details->problem.get(), &solver_summary);
+	ceres::Solve(solver_options, details->problem.get(), &solver_summary);
     return solver_summary.IsSolutionUsable();
 }
 
@@ -201,13 +200,11 @@ void Solver::manage_factor(std::unique_ptr<RotationPriorFactor> &&factor) {
     details->managed_ropfactors.emplace_back(std::move(factor));
 }
 
-void Solver::manage_factor(
-    std::unique_ptr<PreIntegrationErrorFactor> &&factor) {
+void Solver::manage_factor(std::unique_ptr<PreIntegrationErrorFactor> &&factor) {
     details->managed_piefactors.emplace_back(std::move(factor));
 }
 
-void Solver::manage_factor(
-    std::unique_ptr<PreIntegrationPriorFactor> &&factor) {
+void Solver::manage_factor(std::unique_ptr<PreIntegrationPriorFactor> &&factor) {
     details->managed_pipfactors.emplace_back(std::move(factor));
 }
 

@@ -29,9 +29,10 @@ namespace xrslam {
 
 	void FrontendWorker::work(std::unique_lock<std::mutex> &l) {
 
-		std::cout << "pending frame size: " << pending_frame_ids.size() << std::endl;
+		LOG(INFO) << "pending_frames_size: " << pending_frame_ids.size();
 		clock_t front_end_start = clock();
 
+		// 若初始化器存在，那么说明系统还未成功初始化，此时对系统进行初始化
 		if (initializer) {
 			size_t pending_frame_id = pending_frame_ids.front();
 			pending_frame_ids.clear();
@@ -43,7 +44,10 @@ namespace xrslam {
 					pending_frame_id);
 			}
 
+			// 若初始化成功，此时取最邻近帧的姿态出来并重置初始化器
 			if ((sliding_window_tracker = initializer->initialize())) {
+				LOG(INFO) << "VIO initialize Success in frame " << pending_frame_id;
+
 #if defined(XRSLAM_IOS)
 				synchronized(detail->feature_tracker->keymap) {
 					detail->feature_tracker->synchronize_keymap(
@@ -65,7 +69,11 @@ namespace xrslam {
 				lk.unlock();
 				initializer.reset();
 			}
+			else {
+				LOG(INFO) << "VIO initialize Failed in frame " << pending_frame_id;
+			}
 		}
+		// 初始化成功后，维护一个固定大小的滑动窗口进行小规模的优化工作
 		else if (sliding_window_tracker) {
 			size_t pending_frame_id = pending_frame_ids.front();
 			pending_frame_ids.pop_front();
@@ -93,14 +101,16 @@ namespace xrslam {
 				std::unique_lock lk(latest_state_mutex);
 				latest_state = { {}, nil(), {}, {} };
 				lk.unlock();
+
+				// 滑窗跟踪失败，此时重置滑窗跟踪器并重启初始化
 				initializer = std::make_unique<Initializer>(config);
 				sliding_window_tracker.reset();
 			}
 		}
 
 		clock_t front_end_end = clock();
-		std::cout << "front end time: " <<
-			double(front_end_end - front_end_start) / CLOCKS_PER_SEC << "s" << std::endl;
+		LOG(INFO) << "front end time: "
+			<< double(front_end_end - front_end_start) / CLOCKS_PER_SEC << "s";
 	}
 
 	void FrontendWorker::issue_frame(Frame *frame) {

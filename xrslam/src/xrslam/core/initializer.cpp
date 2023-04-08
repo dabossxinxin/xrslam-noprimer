@@ -19,23 +19,20 @@ namespace xrslam {
 
 	Initializer::~Initializer() = default;
 
-	void Initializer::mirror_keyframe_map(Map *feature_tracking_map,
-		size_t init_frame_id) {
-		size_t init_frame_index_last =
-			feature_tracking_map->frame_index_by_id(init_frame_id);
+	void Initializer::mirror_keyframe_map(Map *feature_tracking_map, size_t init_frame_id) {
+		size_t init_frame_index_last = feature_tracking_map->frame_index_by_id(init_frame_id);
 		size_t init_frame_index_gap = config->initializer_keyframe_gap();
-		size_t init_frame_index_distance =
-			init_frame_index_gap * (config->initializer_keyframe_num() - 1);
+		size_t init_frame_index_distance = init_frame_index_gap * (config->initializer_keyframe_num() - 1);
 
 		init_frame_id = nil();
 
+		// 每相隔5帧送一帧图像进来，并且总共送8帧图像进来进行初始化
 		if (init_frame_index_last < init_frame_index_distance) {
 			map.reset();
 			return;
 		}
 
-		size_t init_frame_index_first =
-			init_frame_index_last - init_frame_index_distance;
+		size_t init_frame_index_first = init_frame_index_last - init_frame_index_distance;
 
 		std::vector<size_t> init_keyframe_indices;
 		for (size_t i = 0; i < config->initializer_keyframe_num(); ++i) {

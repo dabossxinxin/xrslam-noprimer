@@ -9,6 +9,7 @@ set(XRSLAM_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(XRSLAM_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(XRSLAM_BINARY_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/include)
 set(XRSLAM_TEST_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
+set(XRSLAM_UTILS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../xrslam-utils)
 
 set(COMMON_HEADERS
   ${XRSLAM_SOURCE_DIR}/xrslam/common.h
@@ -107,6 +108,7 @@ include_directories(${GLOG_INCLUDE_DIRS})
 include_directories(${OpenCV4_INCLUDE_DIR})
 include_directories(${CERES_INCLUDE_DIRS})
 include_directories(${XRSLAM_INCLUDE_DIR})
+include_directories(${XRSLAM_UTILS_DIR})
 include_directories(${XRSLAM_BINARY_INCLUDE_DIR})
 
 target_link_libraries(xrslam options::modern-cpp)

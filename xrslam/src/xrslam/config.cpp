@@ -45,13 +45,13 @@ std::string Config::visual_localization_config_ip() const { return "0.0.0.0"; }
 
 size_t Config::visual_localization_config_port() const { return 0; }
 
-size_t Config::solver_iteration_limit() const { return 10; }
+size_t Config::solver_iteration_limit() const { return 20; }
 
 double Config::solver_time_limit() const { return 1.0e6; }
 
 int Config::random() const { return 648; }
 
-size_t Config::sliding_window_tracker_frequent() const { return 1; }
+size_t Config::sliding_window_tracker_frequent() const { return 5; }
 
 void Config::log_config() const {
     std::stringstream ss;

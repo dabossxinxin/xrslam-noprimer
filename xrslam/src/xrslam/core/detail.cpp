@@ -124,6 +124,8 @@ namespace xrslam {
 
 		frames.emplace_back(std::move(frame));
 
+		Sleep(200);
+
 		return predict_pose(image->t);
 	}
 
@@ -149,7 +151,7 @@ namespace xrslam {
 			inspect_debug(input_output_lag, lag) {
 				lag = std::min(t - state_time, 5.0);
 			}
-			std::cout << "delay: " << t - state_time << std::endl;
+			LOG(INFO) << "delay time: " << t - state_time << "s";
 
 			while (!frontal_imus.empty() && frontal_imus.front().t <= state_time) {
 				frontal_imus.pop_front();

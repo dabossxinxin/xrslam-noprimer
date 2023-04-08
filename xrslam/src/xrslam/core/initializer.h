@@ -14,10 +14,11 @@ namespace xrslam {
 		Initializer(std::shared_ptr<Config> config);
 		~Initializer();
 
+		// 将feature_tracking_map中的帧加入到初始化地图帧中
 		void mirror_keyframe_map(Map *feature_tracking_map, size_t init_frame_id);
 		std::unique_ptr<SlidingWindowTracker> initialize();
 
-		std::unique_ptr<Map> map;
+		std::unique_ptr<Map> map;	// 初始化器中管理的地图
 
 	private:
 		bool init_sfm();

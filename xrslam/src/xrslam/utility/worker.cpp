@@ -18,6 +18,8 @@ namespace xrslam {
 			if (!worker_running)
 				break;
 			work(l);
+
+			//Sleep(1000);
 		}
 	}
 

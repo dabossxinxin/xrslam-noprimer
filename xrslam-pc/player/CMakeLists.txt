@@ -7,6 +7,15 @@ if(TARGET xrslam-extra-opencv-image AND TARGET xrslam-extra-yaml-config)
 include(SuperBuildDepends)
 superbuild_depend(argparse)
 
+find_package(CUDA REQUIRED)
+list(APPEND
+	CUDA_DEPEMDENCIES
+	${CUDA_LIBRARIES}
+	${CUDA_cublas_LIBRARY}
+	${CUDA_cusolver_LIBRARY}
+	${CUDA_cusparse_LIBRARY}
+)
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   add_definitions(-DGLOG_NO_ABBREVIATED_SEVERITIES)
@@ -40,6 +49,7 @@ target_include_directories(xrslam-pc-player
 	${GLOG_INCLUDE_DIRS}
 	${CERES_INCLUDE_DIRS}
 	${GFLAGS_INCLUDE_DIRS}
+	${CUDA_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 	${CMAKE_CURRENT_SOURCE_DIR}/../lightvis/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../../xrslam/include
@@ -55,6 +65,7 @@ target_link_libraries(xrslam-pc-player
 	${GLOG_LIBRARIES}
 	${CERES_RELEASE_LIB}
 	${GFLAGS_LIBRARIES}
+	${CUDA_DEPEMDENCIES}
 )
 
 if(NOT XRSLAM_PC_HEADLESS_ONLY)
@@ -67,8 +78,7 @@ target_link_libraries(xrslam-pc-player
 	${GLOG_LIBRARIES}
 	${CERES_RELEASE_LIB}
 	${GFLAGS_LIBRARIES}
+	${CUDA_DEPEMDENCIES}
 )
-
 endif()
-
 endif()
