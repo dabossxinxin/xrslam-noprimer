@@ -6,7 +6,7 @@ include(FindGLOG)
 include(FindJson)
 include(FindOpenCV)
 include(FindXRPrimer)
-include(FindSpdLog)
+#include(FindSpdLog)
 include(FindEigen3)
 
 if(NOT TARGET options::modern-cpp)

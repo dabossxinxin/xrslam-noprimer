@@ -51,7 +51,7 @@ double Config::solver_time_limit() const { return 1.0e6; }
 
 int Config::random() const { return 648; }
 
-size_t Config::sliding_window_tracker_frequent() const { return 5; }
+size_t Config::sliding_window_tracker_frequent() const { return 1; }
 
 void Config::log_config() const {
     std::stringstream ss;

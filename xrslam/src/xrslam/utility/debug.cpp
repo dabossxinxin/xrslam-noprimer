@@ -1,13 +1,17 @@
 #include <memory>
-#include <spdlog/sinks/stdout_color_sinks.h>
-#include <spdlog/spdlog.h>
+//#include <spdlog/sinks/stdout_color_sinks.h>
+//#include <spdlog/spdlog.h>
 #include <xrslam/common.h>
 
 #define XRSLAM_LOG_MSGBUF_INIT 512
 
 namespace xrslam {
 
-	static spdlog::logger *logger() {
+	void log_message(LogLevel level, const char* format, ...) {
+		
+	}
+
+	/*static spdlog::logger *logger() {
 		static std::unique_ptr<spdlog::logger> s_logger;
 		if (!s_logger) {
 			auto console_sink =
@@ -61,6 +65,6 @@ namespace xrslam {
 			break;
 		}
 		logger()->log(lvl, msgbuf.data());
-	}
+	}*/
 
 } // namespace xrslam

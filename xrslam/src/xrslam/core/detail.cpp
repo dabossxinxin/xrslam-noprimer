@@ -124,7 +124,7 @@ namespace xrslam {
 
 		frames.emplace_back(std::move(frame));
 
-		Sleep(200);
+		//Sleep(200);
 
 		return predict_pose(image->t);
 	}
