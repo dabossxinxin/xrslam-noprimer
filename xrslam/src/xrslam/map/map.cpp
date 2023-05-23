@@ -37,7 +37,7 @@ std::unique_ptr<Frame> Map::detach_frame(size_t index) {
 void Map::untrack_frame(Frame *frame) {
     for (size_t i = 0; i < frame->keypoint_num(); ++i) {
         if (Track *track = frame->get_track(i)) {
-            track->remove_keypoint(frame);
+			track->remove_keypoint(frame);
         }
     }
 }
@@ -52,7 +52,7 @@ void Map::marginalize_frame(size_t index) {
 	runtime_assert(index == 0, "currently only index == 0 is allowed");
 	runtime_assert(marginalization_factor, "marginalization_factor is not initialized yet");
 
-    marginalization_factor->marginalize(index);
+	marginalization_factor->marginalize(index);
     Frame *frame = frames[index].get();
     for (size_t i = 0; i < frame->keypoint_num(); ++i) {
         if (Track *track = frame->get_track(i)) {

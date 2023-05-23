@@ -525,8 +525,7 @@ namespace xrslam {
 	void Initializer::preintegrate() {
 		for (size_t j = 1; j < map->frame_num(); ++j) {
 			Frame *frame_j = map->get_frame(j);
-			frame_j->preintegration.integrate(frame_j->image->t, bg, ba, true,
-				false);
+			frame_j->preintegration.integrate(frame_j->image->t, bg, ba, true, false);
 		}
 	}
 

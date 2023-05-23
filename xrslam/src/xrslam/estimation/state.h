@@ -43,7 +43,7 @@ struct LandmarkState {
         reprojection_error = 0;
     }
 
-    double inv_depth;
+	double inv_depth;
     double reprojection_error;
 };
 

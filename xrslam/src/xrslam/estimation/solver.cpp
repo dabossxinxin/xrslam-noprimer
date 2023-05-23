@@ -12,8 +12,8 @@ namespace xrslam {
 
 struct Solver::SolverDetails {
     static Config *&config() {
-        static Config *s_config = nullptr;
-        return s_config;
+		static Config *s_config = nullptr;
+		return s_config;
     }
     std::unique_ptr<ceres::Problem> problem;
     std::unique_ptr<ceres::LossFunction> cauchy_loss;

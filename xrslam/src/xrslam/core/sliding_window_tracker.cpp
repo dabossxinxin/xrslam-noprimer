@@ -110,6 +110,24 @@ namespace xrslam {
 			landmarks = std::move(points);
 		}
 
+		inspect_debug(global_map_landmarks, gmlandmarks) {
+			for (size_t i = 0; i < map->track_num(); ++i) {
+				if (Track *track = map->get_track(i)) {
+					if (track->tag(TT_VALID)) {
+						Landmark point;
+						point.p = track->get_landmark_point();
+						point.triangulated = track->tag(TT_TRIANGULATED);
+						global_landmarks[reinterpret_cast<long>(track)] = point;
+					}
+				}
+			}
+
+			std::vector<Landmark> points;
+			for (auto& it : global_landmarks)
+				points.emplace_back(it.second);
+			gmlandmarks = std::move(points);
+		}
+	
 		inspect_debug(sliding_window_current_bg, bg) {
 			bg = std::get<2>(get_latest_state()).bg;
 		}

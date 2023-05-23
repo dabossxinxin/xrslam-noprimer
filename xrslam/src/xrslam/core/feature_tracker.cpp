@@ -52,6 +52,7 @@ namespace xrslam {
 			frame->id() % config->sliding_window_tracker_frequent() == 0;
 
 		synchronized(map) {
+			// 若已经成功初始化
 			if (map->frame_num() > 0) {
 				if (is_initialized) {
 					size_t latest_optimized_frame_index =
@@ -79,8 +80,7 @@ namespace xrslam {
 					}
 				}
 
-				// 若当前帧IMU起始数据时间与上一帧图像帧时间相差超过阈值，
-				// 此时需要将上一帧最后一个位置的IMU数据给到当前帧保证数据连续性
+				// 保证当前帧IMU数据的连续性
 				Frame *last_frame = map->get_frame(map->frame_num() - 1);
 				if (!last_frame->preintegration.data.empty()) {
 					if (frame->preintegration.data.empty() ||
@@ -156,6 +156,7 @@ namespace xrslam {
 					auto frame = map->get_frame(map->frame_num() - 1);
 					painter->set_image(frame->image.get());
 					for (size_t i = 0; i < frame->keypoint_num(); ++i) {
+						// 跟踪成功的点显示为绿色，跟踪失败的点显示为红色
 						if (Track *track = frame->get_track(i)) {
 							color3b color = { 0, 255, 0 };
 							painter->point(apply_k(frame->get_keypoint(i), frame->K).cast<int>(),

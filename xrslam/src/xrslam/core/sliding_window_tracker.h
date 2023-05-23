@@ -52,6 +52,8 @@ namespace xrslam {
 		// 滑窗中维护的仅用于滑窗的地图
 		std::unique_ptr<Map>	map;
 
+		std::unordered_map<long, Landmark> global_landmarks;
+
 	private:
 		std::shared_ptr<Config> config;	// slam系统配置信息
 	};

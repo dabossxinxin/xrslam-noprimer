@@ -48,6 +48,7 @@ namespace xrslam {
 			sliding_window_track_painter,
 			sliding_window_reprojection_painter,
 			sliding_window_landmarks,
+			global_map_landmarks,
 			sliding_window_current_bg,
 			sliding_window_current_ba,
 			feature_tracker_time,

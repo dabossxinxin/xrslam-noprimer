@@ -3,7 +3,7 @@
 
 #include <xrslam/common.h>
 
-//#define XRSLAM_ENABLE_THREADING
+#undef XRSLAM_ENABLE_THREADING
 
 namespace xrslam {
 

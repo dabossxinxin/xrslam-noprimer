@@ -108,7 +108,7 @@ void PreIntegrator::predict(const Frame *old_frame, Frame *new_frame) {
     new_frame->pose.p = old_frame->pose.p + 0.5 * gravity * delta.t * delta.t +
                         old_frame->motion.v * delta.t +
                         old_frame->pose.q * delta.p;
-    new_frame->pose.q = old_frame->pose.q * delta.q;
+	new_frame->pose.q = old_frame->pose.q * delta.q;
 }
 
 } // namespace xrslam

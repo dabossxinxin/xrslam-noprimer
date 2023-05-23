@@ -28,9 +28,11 @@ private:
 
 	std::vector<Eigen::Vector3f>	trajectory;			// slam轨迹
 	std::vector<Eigen::Vector3f>	landmarks;			// slam路标点
+	std::vector<Eigen::Vector3f>	global_landmarks;	// 全局路标点
 	Eigen::Vector4f					trajectory_color;	// 轨迹颜色
 	Eigen::Vector4f					camera_color;		// 相机颜色
 	std::vector<Eigen::Vector4f>	landmarks_color;	// 路标点颜色
+	std::vector<Eigen::Vector4f>	global_landmark_color;
 	std::deque<Eigen::Vector3d>		bg_list;			// 陀螺仪偏置
 	std::deque<Eigen::Vector3d>		ba_list;			// 加速度计偏置
 
@@ -77,6 +79,7 @@ public:
 
 		add_trajectory(trajectory, trajectory_color);
 		add_points(landmarks, landmarks_color);
+		add_points(global_landmarks, global_landmark_color);
 
 		add_image(feature_tracker_image.get());	// 添加特征提取视图
 		add_separator();
@@ -150,6 +153,18 @@ public:
 								}
 							}
 						}
+
+						inspect_debug(global_map_landmarks, gmlandmarks) {
+							auto points = std::any_cast<std::vector<xrslam::Landmark>>(gmlandmarks);
+							global_landmarks.clear();
+							for (auto& p : points) {
+								if (p.triangulated) {
+									global_landmarks.emplace_back(p.p.cast<float>());
+									global_landmark_color.emplace_back(1.0, 1.0, 1.0, 0.5);
+								}
+							}
+						}
+
 						inspect_debug(sliding_window_current_bg, bg) {
 							if (bg.has_value()) {
 								bg_list.emplace_back(

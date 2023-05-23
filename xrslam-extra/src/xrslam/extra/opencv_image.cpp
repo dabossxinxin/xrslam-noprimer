@@ -57,8 +57,8 @@ void OpenCvImage::detect_keypoints(std::vector<vector<2>> &keypoints,
 
 		// 泊松圆盘滤波
         PoissonDiskFilter<2> filter(keypoint_distance);
-        filter.preset_points(keypoints);
-        filter.insert_points(new_keypoints);
+		filter.preset_points(keypoints);
+		filter.insert_points(new_keypoints);
 
 		// 移除图像边缘特征点
         new_keypoints.erase(
@@ -71,8 +71,8 @@ void OpenCvImage::detect_keypoints(std::vector<vector<2>> &keypoints,
             new_keypoints.end());
 
 		// 得到的最终keypoint插入到输入的keypoint中
-        keypoints.insert(keypoints.end(), new_keypoints.begin(),
-                         new_keypoints.end());
+		keypoints.insert(keypoints.end(), new_keypoints.begin(),
+			new_keypoints.end());
     }
 }
 
@@ -95,11 +95,11 @@ void OpenCvImage::track_keypoints(const Image *next_image,
     result_status.resize(curr_keypoints.size(), 0);
     if (next_cvimage && curr_cvpoints.size() > 0) {
         Mat cvstatus, cverr;
-        calcOpticalFlowPyrLK(
-            image_pyramid, next_cvimage->image_pyramid, curr_cvpoints,
-            next_cvpoints, cvstatus, cverr, Size(21, 21), (int)level_num(),
-            TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 30, 0.01),
-            OPTFLOW_USE_INITIAL_FLOW);
+		calcOpticalFlowPyrLK(
+			image_pyramid, next_cvimage->image_pyramid, curr_cvpoints,
+			next_cvpoints, cvstatus, cverr, Size(21, 21), (int)level_num(),
+			TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 30, 0.01),
+			OPTFLOW_USE_INITIAL_FLOW);
         for (size_t i = 0; i < next_cvpoints.size(); ++i) {
 			// 去除图像边缘的特征点
             result_status[i] = cvstatus.at<unsigned char>((int)i);
@@ -107,15 +107,15 @@ void OpenCvImage::track_keypoints(const Image *next_image,
                 next_cvpoints[i].x >= image.cols - EDGE_MASK ||
                 next_cvpoints[i].y < EDGE_MASK ||
                 next_cvpoints[i].y >= image.rows - EDGE_MASK) {
-                result_status[i] = 0;
+				result_status[i] = 0;
             }
 
 			// 去除光流跟踪中位移较大的点
             if (result_status[i]) {
                 auto p = (next_cvpoints[i] - curr_cvpoints[i]);
-                auto v = vector<2>(p.x, p.y);
+				auto v = vector<2>(p.x, p.y);
                 if (v.norm() > image.rows / 4) {
-                    result_status[i] = 0;
+					result_status[i] = 0;
                 }
             }
         }

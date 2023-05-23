@@ -62,7 +62,7 @@ std::optional<vector<3>> Track::triangulate() const {
         vector<3> qi = Ps[i] * hlandmark;
         if (!(qi[2] * hlandmark[3] > 0)) {
             is_valid = false;
-            break;
+			break;
         }
     }
     if (is_valid) {
